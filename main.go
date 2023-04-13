@@ -15,7 +15,20 @@ import (
 
 func main() {
 	filename := "alarm.mp3"
-	alarmTime := time.Now().Add(10 * time.Second)
+	// Create a variable representing the current date
+	now := time.Now()
+	fmt.Println(now)
+	// Create a variable representing 6:30am today
+	today := time.Date(now.Year(), now.Month(), now.Day(), 6, 30, 0, 0, now.Location())
+
+	// If it's already past 6:30am today, use tomorrow's date instead
+	if now.After(today) {
+		today = today.AddDate(0, 0, 1)
+	}
+
+	// Output the resulting time.Time value
+	fmt.Println(today)
+	alarmTime := today
 
 	// Set up snooze channel and goroutine
 	snooze := make(chan bool)
